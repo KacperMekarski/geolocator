@@ -70,6 +70,7 @@ GEM
       msgpack (~> 1.2)
     builder (3.2.4)
     concurrent-ruby (1.2.3)
+    connection_pool (2.3.0)
     crass (1.0.6)
     date (3.3.4)
     debug (1.9.1)
@@ -108,6 +109,8 @@ GEM
       net-protocol
     nio4r (2.7.0)
     nokogiri (1.16.0-x86_64-darwin)
+      racc (~> 1.4)
+    nokogiri (1.16.0-x86_64-linux)
       racc (~> 1.4)
     pg (1.5.4)
     psych (5.1.2)
@@ -149,6 +152,7 @@ GEM
     rake (13.1.0)
     rdoc (6.6.2)
       psych (>= 4.0.0)
+    redis (4.8.1)
     reline (0.4.2)
       io-console (~> 0.5)
     stringio (3.1.0)
@@ -163,13 +167,16 @@ GEM
 
 PLATFORMS
   x86_64-darwin-21
+  x86_64-linux
 
 DEPENDENCIES
   bootsnap
+  connection_pool
   debug
   pg (~> 1.1)
   puma (~> 5.0)
   rails (~> 7.0.6)
+  redis (~> 4.0)
   tzinfo-data
 
 RUBY VERSION
