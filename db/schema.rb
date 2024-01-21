@@ -36,13 +36,26 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_21_121316) do
     t.float "longitude"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.uuid "internet_protocol_id", null: false
+    t.index ["city"], name: "index_geolocations_on_city"
+    t.index ["continent_code"], name: "index_geolocations_on_continent_code"
+    t.index ["continent_name"], name: "index_geolocations_on_continent_name"
+    t.index ["country_code"], name: "index_geolocations_on_country_code"
+    t.index ["country_name"], name: "index_geolocations_on_country_name"
+    t.index ["internet_protocol_id"], name: "index_geolocations_on_internet_protocol_id"
+    t.index ["latitude"], name: "index_geolocations_on_latitude"
+    t.index ["longitude"], name: "index_geolocations_on_longitude"
+    t.index ["region_code"], name: "index_geolocations_on_region_code"
+    t.index ["region_name"], name: "index_geolocations_on_region_name"
+    t.index ["zip"], name: "index_geolocations_on_zip"
   end
 
   create_table "internet_protocols", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "name", null: false
+    t.string "address", null: false
     t.datetime "created_at", null: false
-    t.index ["name"], name: "index_internet_protocols_on_name", unique: true
+    t.index ["address"], name: "index_internet_protocols_on_address", unique: true
   end
 
   add_foreign_key "domains", "internet_protocols"
+  add_foreign_key "geolocations", "internet_protocols"
 end

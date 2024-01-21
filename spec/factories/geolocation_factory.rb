@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :geolocation,  class: Geolocation do
+  factory :geolocation, class: 'Geolocation' do
     continent_code { 'NA' }
     continent_name { 'North America' }
     country_code { FFaker::Address.country_code }
