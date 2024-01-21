@@ -1,0 +1,22 @@
+AllCops:
+  # Default formatter will be used if no `-f/--format` option is given.
+  DefaultFormatter: progress
+
+  # Enables the result cache if `true`. Can be overridden by the `--cache` command
+  # line option.
+  UseCache: true
+
+  TargetRubyVersion: 3.0
+
+  NewCops: enable
+
+  Exclude:
+    - db/schema.rb
+    - db/migrate/**/*
+    - vendor/bundle/**/*
+    - app/javascript/**/*
+    - node_modules/**/*
+    - config/**/*
+    - bin/**/*
+    - Rakefile
+    - config.ru
