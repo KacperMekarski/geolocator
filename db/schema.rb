@@ -8,19 +8,19 @@
 # migrations from scratch. Old migrations may fail to apply correctly if those
 # migrations use external dependencies or application code.
 #
-# It"s strongly recommended that you check this file into your version control system.
+# It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 20_240_121_121_316) do
+ActiveRecord::Schema[7.0].define(version: 2024_01_21_121316) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "domain_names", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "domains", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "internet_protocol_id", null: false
-    t.index ["internet_protocol_id"], name: "index_domain_names_on_internet_protocol_id"
-    t.index ["name"], name: "index_domain_names_on_name", unique: true
+    t.index ["internet_protocol_id"], name: "index_domains_on_internet_protocol_id"
+    t.index ["name"], name: "index_domains_on_name", unique: true
   end
 
   create_table "geolocations", force: :cascade do |t|
@@ -44,5 +44,5 @@ ActiveRecord::Schema[7.0].define(version: 20_240_121_121_316) do
     t.index ["name"], name: "index_internet_protocols_on_name", unique: true
   end
 
-  add_foreign_key "domain_names", "internet_protocols"
+  add_foreign_key "domains", "internet_protocols"
 end

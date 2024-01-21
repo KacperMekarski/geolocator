@@ -20,3 +20,9 @@ AllCops:
     - bin/**/*
     - Rakefile
     - config.ru
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/ClassAndModuleChildren:
+  Enabled: false
