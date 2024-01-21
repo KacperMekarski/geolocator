@@ -1,6 +1,6 @@
 class CreateGeolocations < ActiveRecord::Migration[7.0]
   def change
-    create_table :geolocations do |t|
+    create_table :geolocations, id: :uuid do |t|
       t.string :continent_code
       t.string :continent_name
       t.string :country_code

@@ -23,7 +23,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_21_121316) do
     t.index ["name"], name: "index_domains_on_name", unique: true
   end
 
-  create_table "geolocations", force: :cascade do |t|
+  create_table "geolocations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "continent_code"
     t.string "continent_name"
     t.string "country_code"

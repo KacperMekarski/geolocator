@@ -18,8 +18,14 @@ describe Domain, type: :model do
   end
 
   describe 'associations' do
-    it 'belongs to internet protocol' do
-      expect(build(:domain).ip_address).to be_present
+    let!(:domain) { create(:domain, ip_address: create(:ip_address, geolocation: create(:geolocation))) }
+
+    it 'belongs to ip address' do
+      expect(domain.ip_address).to be_present
+    end
+
+    it 'has one geolocation through ip address' do
+      expect(domain.geolocation).to be_present
     end
   end
 end
