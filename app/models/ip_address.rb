@@ -1,4 +1,4 @@
-class InternetProtocol < ApplicationRecord
+class IPAddress < ApplicationRecord
   validates :address, presence: true, uniqueness: true
 
   has_one :geolocation, dependent: :destroy

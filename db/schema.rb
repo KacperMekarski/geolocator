@@ -18,8 +18,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_21_121316) do
     t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.uuid "internet_protocol_id", null: false
-    t.index ["internet_protocol_id"], name: "index_domains_on_internet_protocol_id"
+    t.uuid "ip_address_id", null: false
+    t.index ["ip_address_id"], name: "index_domains_on_ip_address_id"
     t.index ["name"], name: "index_domains_on_name", unique: true
   end
 
@@ -36,13 +36,13 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_21_121316) do
     t.float "longitude"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.uuid "internet_protocol_id", null: false
+    t.uuid "ip_address_id", null: false
     t.index ["city"], name: "index_geolocations_on_city"
     t.index ["continent_code"], name: "index_geolocations_on_continent_code"
     t.index ["continent_name"], name: "index_geolocations_on_continent_name"
     t.index ["country_code"], name: "index_geolocations_on_country_code"
     t.index ["country_name"], name: "index_geolocations_on_country_name"
-    t.index ["internet_protocol_id"], name: "index_geolocations_on_internet_protocol_id"
+    t.index ["ip_address_id"], name: "index_geolocations_on_ip_address_id"
     t.index ["latitude"], name: "index_geolocations_on_latitude"
     t.index ["longitude"], name: "index_geolocations_on_longitude"
     t.index ["region_code"], name: "index_geolocations_on_region_code"
@@ -50,12 +50,12 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_21_121316) do
     t.index ["zip"], name: "index_geolocations_on_zip"
   end
 
-  create_table "internet_protocols", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "ip_addresses", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "address", null: false
     t.datetime "created_at", null: false
-    t.index ["address"], name: "index_internet_protocols_on_address", unique: true
+    t.index ["address"], name: "index_ip_addresses_on_address", unique: true
   end
 
-  add_foreign_key "domains", "internet_protocols"
-  add_foreign_key "geolocations", "internet_protocols"
+  add_foreign_key "domains", "ip_addresses"
+  add_foreign_key "geolocations", "ip_addresses"
 end

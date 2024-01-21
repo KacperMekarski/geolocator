@@ -19,7 +19,7 @@ describe Domain, type: :model do
 
   describe 'associations' do
     it 'belongs to internet protocol' do
-      expect(build(:domain).internet_protocol).to be_present
+      expect(build(:domain).ip_address).to be_present
     end
   end
 end

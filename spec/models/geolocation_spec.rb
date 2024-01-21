@@ -45,7 +45,7 @@ describe Geolocation, type: :model do
 
   describe 'associations' do
     it 'belongs to internet protocol' do
-      expect(build(:geolocation).internet_protocol).to be_present
+      expect(build(:geolocation).ip_address).to be_present
     end
   end
 end

@@ -11,6 +11,6 @@ FactoryBot.define do
     latitude { FFaker::Geolocation.lat }
     longitude { FFaker::Geolocation.lng }
 
-    association :internet_protocol, factory: :internet_protocol
+    association :ip_address, factory: :ip_address
   end
 end
