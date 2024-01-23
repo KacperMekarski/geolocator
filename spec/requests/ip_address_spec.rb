@@ -124,7 +124,7 @@ describe 'IP Addresses', type: :request do
       let(:ip) { '193.28.84.37' }
 
       it 'renders 502 error payload' do
-        VCR.use_cassette('geolocation_fetched') do
+        VCR.use_cassette('geolocation_not_fetched') do
           stub_const('IpstackAdapter::API_URL', 'https://api.ipstack.com')
           subject
 
