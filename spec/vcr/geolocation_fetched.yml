@@ -43,4 +43,37 @@ http_interactions:
         "DS", "country_name": "Poland", "country_code": "PL", "continent_name": "Europe",
         "continent_code": "EU", "ip": "193.28.84.37"}'
   recorded_at: Tue, 23 Jan 2024 16:17:59 GMT
+- request:
+    method: get
+    uri: https://api.ipstack.com/193.28.84.37?access_key=1de96d674202e341c06139dbe054ccd3&fields=ip%2Ccontinent_code%2Ccontinent_name%2Ccountry_code%2Ccountry_name%2Cregion_code%2Cregion_name%2Ccity%2Czip%2Clatitude%2Clongitude
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.7.4
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      date:
+      - Tue, 23 Jan 2024 19:58:02 GMT
+      content-type:
+      - application/json; Charset=UTF-8
+      transfer-encoding:
+      - chunked
+      x-apilayer-transaction-id:
+      - 7c3dbcd1-9c92-480a-966f-e91e1913d8df
+      access-control-allow-methods:
+      - GET, HEAD, POST, PUT, PATCH, DELETE, OPTIONS
+      access-control-allow-origin:
+      - "*"
+      x-request-time:
+      - '0.007'
+    body:
+      encoding: UTF-8
+      string: '{"success":false,"error":{"code":105,"type":"https_access_restricted","info":"Access
+        Restricted - Your current Subscription Plan does not support HTTPS Encryption."}}'
+  recorded_at: Tue, 23 Jan 2024 19:58:02 GMT
 recorded_with: VCR 6.2.0

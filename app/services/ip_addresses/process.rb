@@ -10,13 +10,17 @@ module IPAddresses
       return Result.new(true, ip_address) if ip_address.present?
       return Result.new(false, nil, :unprocessable_entity) unless @ip_address =~ Resolv::AddressRegex
 
-      @geolocation_params = @geolocation_adapter.call(@ip_address)
-      ip_address = IPAddress.create!(
-        address: @ip_address,
-        geolocation_attributes: @geolocation_params.except('ip')
-      )
+      result = @geolocation_adapter.call(@ip_address)
 
-      Result.new(true, ip_address)
+      if result.success?
+        ip_address = IPAddress.create!(
+          address: @ip_address,
+          geolocation_attributes: result.value.except('ip')
+        )
+        Result.new(true, ip_address)
+      else
+        result
+      end
     end
   end
 end

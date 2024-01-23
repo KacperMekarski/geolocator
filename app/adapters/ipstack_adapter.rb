@@ -1,6 +1,4 @@
-class IpstackAdapter
-  WrongIpError = Class.new(StandardError)
-
+class IpstackAdapter < BaseAdapter
   API_URL = 'http://api.ipstack.com'.freeze
 
   def self.call(internet_protocol)
@@ -10,11 +8,13 @@ class IpstackAdapter
                            fields: Geolocation::FIELDS.join(','))
 
     @response_body = JSON.parse(response.body)
-    check_for_errors
-    @response_body
-  end
 
-  def self.check_for_errors
-    raise WrongIpError, 'Wrong IP' if @response_body.except('ip').values.uniq[0].nil?
+    if @response_body['success'] == false && @response_body['error'].present?
+      return Result.new(false, nil, :bad_gateway)
+    end
+
+    Result.new(true, @response_body)
+  rescue Faraday::Error, Faraday::ConnectionFailed, Faraday::TimeoutError, Faraday::SSLError
+    Result.new(false, nil, :bad_gateway)
   end
 end
