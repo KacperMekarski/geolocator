@@ -27,5 +27,13 @@ describe Domain, type: :model do
     it 'has one geolocation through ip address' do
       expect(domain.geolocation).to be_present
     end
+
+    it 'does not delete ip address when domain is deleted' do
+      expect { domain.destroy }.not_to change(IPAddress, :count)
+    end
+
+    it 'does not delete geolocation when domain is deleted' do
+      expect { domain.destroy }.not_to change(Geolocation, :count)
+    end
   end
 end

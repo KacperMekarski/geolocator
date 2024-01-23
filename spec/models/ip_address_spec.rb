@@ -15,12 +15,20 @@ describe IPAddress, type: :model do
   end
 
   describe 'associations' do
-    let(:ip_address) do
+    let!(:ip_address) do
       create(:ip_address, geolocation: create(:geolocation), domains: create_list(:domain, 2))
     end
 
     it 'has one geolocation' do
       expect(ip_address.geolocation).to be_present
+    end
+
+    it 'deletes geolocation when IP address is deleted' do
+      expect { ip_address.destroy }.to change(Geolocation, :count).by(-1)
+    end
+
+    it 'deletes domains when IP address is deleted' do
+      expect { ip_address.destroy }.to change(Domain, :count).by(-2)
     end
 
     it 'has many domains' do

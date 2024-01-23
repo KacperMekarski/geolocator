@@ -1,12 +1,12 @@
 require 'rails_helper'
 
 describe 'IP Addresses', type: :request do
-  describe 'GET /api/ip_addresses' do
+  describe 'GET /api/ip_addresses/:id' do
     let!(:ip_address) { create(:ip_address, geolocation: create(:geolocation)) }
     let(:response_body) { JSON.parse(response.body) }
 
     context 'when IP address exists' do
-      before { get api_ip_address_url(ip_address.address), as: :json }
+      before { get "/api/ip_addresses/#{ip_address.address}", as: :json }
 
       it 'has valid JSON payload' do
         expect(response).to have_http_status(:ok)
@@ -26,7 +26,34 @@ describe 'IP Addresses', type: :request do
     end
 
     context 'when IP address does not exist' do
-      before { get api_ip_address_url(FFaker::Internet.ip_v4_address), as: :json }
+      before { get "/api/ip_addresses/#{FFaker::Internet.ip_v4_address}", as: :json }
+
+      it 'renders error payload' do
+        expect(response).to have_http_status(:not_found)
+        expect(response_body['errors']).to include({ 'detail' => 'Not found' })
+      end
+    end
+  end
+
+  describe 'DELETE /api/ip_addresses/:id' do
+    subject { delete "/api/ip_addresses/#{ip_address.address}", as: :json }
+
+    let!(:ip_address) { create(:ip_address, geolocation: create(:geolocation)) }
+    let(:response_body) { JSON.parse(response.body) }
+
+    context 'when IP address is found' do
+      it 'deletes IP address' do
+        expect { subject }.to change(IPAddress, :count).by(-1)
+      end
+
+      it 'has valid JSON payload' do
+        subject
+        expect(response).to have_http_status(:ok)
+      end
+    end
+
+    context 'when IP address is not found' do
+      before { delete "/api/ip_addresses/#{FFaker::Internet.ip_v4_address}", as: :json }
 
       it 'renders error payload' do
         expect(response).to have_http_status(:not_found)

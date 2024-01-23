@@ -5,6 +5,11 @@ class ApplicationController < ActionController::API
     render jsonapi: resource, include: [:geolocation]
   end
 
+  def destroy
+    resource.destroy!
+    head :ok
+  end
+
   protected
 
   def resource
