@@ -4,4 +4,8 @@ class SerializableIPAddress < ::JSONAPI::Serializable::Resource
   attributes :address
 
   has_one :geolocation
+
+  def jsonapi_cache_key(*)
+    @object.cache_key_with_version
+  end
 end

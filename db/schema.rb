@@ -53,6 +53,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_21_121316) do
   create_table "ip_addresses", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "address", null: false
     t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["address"], name: "index_ip_addresses_on_address", unique: true
   end
 

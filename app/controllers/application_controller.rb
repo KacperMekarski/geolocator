@@ -12,7 +12,9 @@ class ApplicationController < ActionController::API
   end
 
   def show
-    render jsonapi: resource, include: [:geolocation]
+    if stale?(etag: [resource, params[:include]&.to_s, params[:fields]&.to_s], last_modified: resource.updated_at.utc, public: true)
+      render jsonapi: resource, include: [:geolocation], cache: Rails.cache
+    end
   end
 
   def destroy
