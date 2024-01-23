@@ -67,3 +67,12 @@ RSpec.configure do |config|
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
 end
+
+VCR.configure do |c|
+  c.allow_http_connections_when_no_cassette = false
+  c.cassette_library_dir = Rails.root.join('spec', 'vcr')
+  c.hook_into :faraday
+  c.ignore_localhost = true
+  c.configure_rspec_metadata!
+  c.default_cassette_options = { record: :new_episodes }
+end

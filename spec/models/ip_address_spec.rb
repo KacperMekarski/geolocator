@@ -12,6 +12,12 @@ describe IPAddress, type: :model do
       create(:ip_address, address: address)
       expect(build(:ip_address, address: address)).to be_invalid
     end
+
+    it 'validates format of address' do
+      expect(build(:ip_address, address: 'invalid')).to be_invalid
+      expect(build(:ip_address, address: FFaker::Internet.ip_v4_address)).to be_valid
+      expect(build(:ip_address, address: '2001:0db8:85a3:0000:0000:8a2e:0370:7334')).to be_valid
+    end
   end
 
   describe 'associations' do

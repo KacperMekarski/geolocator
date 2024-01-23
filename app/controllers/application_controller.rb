@@ -1,6 +1,16 @@
 class ApplicationController < ActionController::API
   rescue_from ActiveRecord::RecordNotFound, with: :render_not_found_error
 
+  def create
+    result = create_service.new(params).call
+
+    if result.success?
+      render jsonapi: result.value, include: [:geolocation]
+    else
+      render_error(result.error, status: result.error)
+    end
+  end
+
   def show
     render jsonapi: resource, include: [:geolocation]
   end
@@ -13,6 +23,10 @@ class ApplicationController < ActionController::API
   protected
 
   def resource
+    raise NotImplementedError
+  end
+
+  def create_service
     raise NotImplementedError
   end
 
