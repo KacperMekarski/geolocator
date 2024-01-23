@@ -1,4 +1,4 @@
-class URLValidator < ActiveModel::EachValidator
+class URLValidator
   def self.valid?(url)
     uri = begin
       URI.parse(url)

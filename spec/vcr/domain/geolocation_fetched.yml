@@ -1,0 +1,46 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://api.ipstack.com/142.250.203.132?access_key=1de96d674202e341c06139dbe054ccd3&fields=ip%2Ccontinent_code%2Ccontinent_name%2Ccountry_code%2Ccountry_name%2Cregion_code%2Cregion_name%2Ccity%2Czip%2Clatitude%2Clongitude
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.7.4
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      content-type:
+      - application/json
+      transfer-encoding:
+      - chunked
+      date:
+      - Tue, 23 Jan 2024 22:08:57 GMT
+      x-apilayer-transaction-id:
+      - 49be857e-5732-4a3a-acea-a947a5d35a6f
+      access-control-allow-origin:
+      - "*"
+      access-control-allow-methods:
+      - GET, POST, HEAD, OPTIONS
+      access-control-allow-headers:
+      - "*"
+      x-quota-limit:
+      - '100'
+      x-quota-remaining:
+      - '85'
+      x-increment-usage:
+      - '1'
+      x-request-time:
+      - '0.031'
+    body:
+      encoding: UTF-8
+      string: '{"longitude": 21.018339157104492, "latitude": 52.2317008972168, "zip":
+        "00-025", "city": "Warsaw", "region_name": "Mazovia", "region_code": "MZ",
+        "country_name": "Poland", "country_code": "PL", "continent_name": "Europe",
+        "continent_code": "EU", "ip": "142.250.203.132"}'
+  recorded_at: Tue, 23 Jan 2024 22:08:57 GMT
+recorded_with: VCR 6.2.0

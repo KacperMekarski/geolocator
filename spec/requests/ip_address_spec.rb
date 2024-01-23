@@ -3,7 +3,7 @@ require 'rails_helper'
 describe 'IP Addresses', type: :request do
   shared_examples 'valid JSON payload' do
     it 'has valid JSON payload' do
-      VCR.use_cassette('geolocation_fetched') do
+      VCR.use_cassette('ip/geolocation_fetched') do
         subject
 
         expect(response).to have_http_status(:ok)
@@ -112,7 +112,7 @@ describe 'IP Addresses', type: :request do
       let(:ip) { '193.28.84.37' }
 
       it 'creates new IP address with associated geolocation', vcr: true do
-        VCR.use_cassette('geolocation_fetched') do
+        VCR.use_cassette('ip/geolocation_fetched') do
           expect { subject }.to change(IPAddress, :count).by(1)
         end
       end
@@ -124,12 +124,20 @@ describe 'IP Addresses', type: :request do
       let(:ip) { '193.28.84.37' }
 
       it 'renders 502 error payload' do
-        VCR.use_cassette('geolocation_not_fetched') do
+        VCR.use_cassette('ip/geolocation_not_fetched') do
           stub_const('IpstackAdapter::API_URL', 'https://api.ipstack.com')
           subject
 
           expect(response).to have_http_status(:bad_gateway)
           expect(response_body['errors']).to include({ 'detail' => 'bad_gateway' })
+        end
+      end
+
+      it 'does not create IP address' do
+        VCR.use_cassette('ip/geolocation_not_fetched') do
+          stub_const('IpstackAdapter::API_URL', 'https://api.ipstack.com')
+
+          expect { subject }.not_to change(IPAddress, :count)
         end
       end
     end
@@ -143,6 +151,11 @@ describe 'IP Addresses', type: :request do
 
         expect(response).to have_http_status(:bad_gateway)
         expect(response_body['errors']).to include({ 'detail' => 'bad_gateway' })
+      end
+
+      it 'does not create IP address' do
+        allow(Faraday).to receive(:get).and_raise(Faraday::ConnectionFailed)
+        expect { subject }.not_to change(IPAddress, :count)
       end
     end
   end

@@ -15,22 +15,22 @@ http_interactions:
       message: OK
     headers:
       date:
-      - Tue, 23 Jan 2024 20:25:06 GMT
+      - Tue, 23 Jan 2024 22:14:32 GMT
       content-type:
       - application/json; Charset=UTF-8
       transfer-encoding:
       - chunked
       x-apilayer-transaction-id:
-      - 5aa188f0-b891-40fd-8b3a-a05cdc974c9e
+      - 205eb431-d414-4e34-9c28-16eadee413a7
       access-control-allow-methods:
       - GET, HEAD, POST, PUT, PATCH, DELETE, OPTIONS
       access-control-allow-origin:
       - "*"
       x-request-time:
-      - '0.007'
+      - '0.006'
     body:
       encoding: UTF-8
       string: '{"success":false,"error":{"code":105,"type":"https_access_restricted","info":"Access
         Restricted - Your current Subscription Plan does not support HTTPS Encryption."}}'
-  recorded_at: Tue, 23 Jan 2024 20:25:06 GMT
+  recorded_at: Tue, 23 Jan 2024 22:14:32 GMT
 recorded_with: VCR 6.2.0

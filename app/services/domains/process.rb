@@ -1,22 +1,28 @@
 module Domains
-  class Process
-    def initialize(params)
-      @ip_address = params[:ip]
+  class Process < BaseService
+    def initialize(params, url_validator = URLValidator, domain_finder = Domains::FindByURL,
+                   ip_finder = IPAddresses::FindByDomain, ip_address_processor = IPAddresses::Process)
+      @url = URLSanitizer.call(params[:url])
+      @url_validator = url_validator
+      @domain_finder = domain_finder
+      @ip_finder = ip_finder
+      @ip_address_processor = ip_address_processor
     end
 
     def call
-      ip_address = IPAddress.find_by(address: @ip_address)
-      return Result.new(true, ip_address) if ip_address.present?
-      return Result.new(false, nil, :unprocessable_entity) unless @ip_address =~ Resolv::AddressRegex
+      domain = @domain_finder.new(@url, @url_validator).call
+      return Result.new(true, domain) if domain.present?
+      return Result.new(false, nil, :unprocessable_entity) unless @url_validator.valid?(@url)
 
-      result = @geolocation_adapter.call(@ip_address)
+      domain_name = URI.parse(@url).host
+      result = @ip_address_processor.new({ ip: @ip_finder.call(domain_name) }).call
 
       if result.success?
-        ip_address = IPAddress.create!(
-          address: @ip_address,
-          geolocation_attributes: result.value.except('ip')
+        domain = Domain.create!(
+          name: domain_name,
+          ip_address: result.value
         )
-        Result.new(true, ip_address)
+        Result.new(true, domain)
       else
         result
       end

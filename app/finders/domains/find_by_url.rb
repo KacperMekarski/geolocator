@@ -6,7 +6,7 @@ module Domains
     end
 
     def call
-      Domain.find_by!(name: domain_name)
+      Domain.find_by(name: domain_name)
     end
 
     private
