@@ -1,5 +1,5 @@
 ## Description of geolocator
-It's REST API which locates and stores location basing on IP.
+It's REST API which locates and stores location basing on IP or URL.
 
 ## Code style
 
