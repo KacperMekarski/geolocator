@@ -35,6 +35,40 @@ Stop application with:
 $ docker compose down
 ```
 
+## API Documentation
+Sorry for such documentation, I know it should be done with swagger or something but I didn't have time for it.
+### IP
+Provide geolocation data based on IP address:
+<br>
+GET /api/ip_addresses/20.199.210.196
+<br>
+
+Delete geolocation data based on IP address:
+<br>
+DELETE /api/ip_addresses/20.199.210.196
+<br>
+
+Add geolocation data based on IP address:
+<br>
+POST /api/ip_addresses, body: { 'ip': '20.199.210.196' }
+
+### URL
+Please note URL should be encoded.
+
+Provide geolocation data based on URL address:
+<br>
+GET /api/domains?url=https://google.com
+<br>
+
+Delete geolocation data based on URL address:
+<br>
+DELETE /api/domains?url=https://google.com
+<br>
+
+Add geolocation data based on URL address:
+<br>
+POST /api/domains, body: { 'url': 'https://google.com' }
+
 ## Author
 
 * [Kacper Mekarski](https://github.com/KacperMekarski)
