@@ -1,6 +1,6 @@
 module Domains
   class FindByURL
-    def initialize(url, validator)
+    def initialize(url, validator = URLValidator)
       @url = url
       @validator = validator
     end

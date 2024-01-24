@@ -6,9 +6,10 @@ module IPAddresses
     end
 
     def call
+      return Result.new(false, nil, :unprocessable_entity) unless Resolv::AddressRegex.match?(@ip_address)
+
       ip_address = IPAddress.find_by(address: @ip_address)
       return Result.new(true, ip_address) if ip_address.present?
-      return Result.new(false, nil, :unprocessable_entity) unless Resolv::AddressRegex.match?(@ip_address)
 
       result = @geolocation_adapter.call(@ip_address)
 
