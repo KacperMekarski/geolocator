@@ -1,24 +1,42 @@
-# README
+## Description of geolocator
+It's REST API which locates and stores location basing on IP.
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Code style
 
-Things you may want to cover:
+Rubocop
 
-* Ruby version
+## Built with:
 
-* System dependencies
+- [Ruby 3.0.3](https://www.ruby-lang.org/en/)
+- [Ruby on Rails 7.0.8](https://rubyonrails.org/)
+- [PostgreSQL 13.4](https://www.postgresql.org/)
+- [Redis 6.2.6](https://redis.io/)
+- [Docker 24.0.7](https://www.docker.com/)
 
-* Configuration
+## Installing
 
-* Database creation
+```sh
+$ git clone https://github.com/KacperMekarski/geolocator.git
 
-* Database initialization
+$ cd geolocator
 
-* How to run the test suite
+$ docker compose build
 
-* Services (job queues, cache servers, search engines, etc.)
+$ docker compose run web rake db:setup
 
-* Deployment instructions
+$ docker compose up
 
-* ...
+You can run tests with:
+$ docker compose run web bundle exec rspec spec
+
+Stop application with:
+$ docker compose down
+```
+
+## Author
+
+* [Kacper Mekarski](https://github.com/KacperMekarski)
+
+## License
+
+MIT © [Kacper Mękarski](https://github.com/KacperMekarski)
