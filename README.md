@@ -20,6 +20,8 @@ $ git clone https://github.com/KacperMekarski/geolocator.git
 
 $ cd geolocator
 
+Download master.key file and place it in config directory. File was given in email with link to this repo)
+
 $ docker compose build
 
 $ docker compose run web rake db:setup
