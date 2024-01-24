@@ -1,6 +1,4 @@
 class ApplicationController < ActionController::API
-  rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
-
   def create
     result = create_service.new(params).call
 
@@ -12,12 +10,16 @@ class ApplicationController < ActionController::API
   end
 
   def show
+    return record_not_found if resource.nil?
+
     if stale?(etag: resource, last_modified: resource.updated_at.utc, public: true)
       render_serialized_payload { serialize_resource(resource) }
     end
   end
 
   def destroy
+    return record_not_found if resource.nil?
+
     resource.destroy!
     head :ok
   end

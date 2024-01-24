@@ -2,9 +2,7 @@ class Api::DomainsController < ApplicationController
   private
 
   def resource
-    @resource ||= Domains::FindByURL.new(URLSanitizer.call(params[:url]), URLValidator).call.tap do |domain|
-      raise ActiveRecord::RecordNotFound unless domain.present?
-    end
+    @resource ||= Domains::FindByURL.new(URLSanitizer.call(params[:url]), URLValidator).call
   end
 
   def resource_serializer
