@@ -7,6 +7,10 @@ class Api::DomainsController < ApplicationController
     end
   end
 
+  def resource_serializer
+    ::DomainSerializer
+  end
+
   def create_service
     Domains::Process
   end

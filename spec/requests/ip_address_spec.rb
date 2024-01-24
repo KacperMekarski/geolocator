@@ -9,7 +9,7 @@ describe 'IP Addresses', type: :request do
         expect(response).to have_http_status(:ok)
         expect(response_body['data']).to have_attribute(:address).with_value(ip_address.address)
         expect(response_body['data']).to have_relationships(:geolocation)
-        expect(response_body['included']).to include(have_type('geolocations').and(have_attribute(:continent_code).with_value(ip_address.geolocation.continent_code)
+        expect(response_body['included']).to include(have_type('geolocation').and(have_attribute(:continent_code).with_value(ip_address.geolocation.continent_code)
           .and(have_attribute(:continent_name).with_value(ip_address.geolocation.continent_name)
           .and(have_attribute(:country_code).with_value(ip_address.geolocation.country_code)
           .and(have_attribute(:country_name).with_value(ip_address.geolocation.country_name)
@@ -40,7 +40,7 @@ describe 'IP Addresses', type: :request do
         subject
 
         expect(response).to have_http_status(:not_found)
-        expect(response_body['errors']).to include({ 'detail' => 'Not found' })
+        expect(response_body['error']).to eq('Resource not found')
       end
     end
   end
@@ -69,7 +69,7 @@ describe 'IP Addresses', type: :request do
         subject
 
         expect(response).to have_http_status(:not_found)
-        expect(response_body['errors']).to include({ 'detail' => 'Not found' })
+        expect(response_body['error']).to eq('Resource not found')
       end
     end
   end
@@ -103,7 +103,7 @@ describe 'IP Addresses', type: :request do
         subject
 
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response_body['errors']).to include({ 'detail' => 'unprocessable_entity' })
+        expect(response_body['error']).to eq 'unprocessable_entity'
       end
     end
 
@@ -129,7 +129,7 @@ describe 'IP Addresses', type: :request do
           subject
 
           expect(response).to have_http_status(:bad_gateway)
-          expect(response_body['errors']).to include({ 'detail' => 'bad_gateway' })
+          expect(response_body['error']).to eq 'bad_gateway'
         end
       end
 
@@ -150,7 +150,7 @@ describe 'IP Addresses', type: :request do
         subject
 
         expect(response).to have_http_status(:bad_gateway)
-        expect(response_body['errors']).to include({ 'detail' => 'bad_gateway' })
+        expect(response_body['error']).to eq 'bad_gateway'
       end
 
       it 'does not create IP address' do

@@ -1,19 +1,19 @@
 class ApplicationController < ActionController::API
-  rescue_from ActiveRecord::RecordNotFound, with: :render_not_found_error
+  rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 
   def create
     result = create_service.new(params).call
 
     if result.success?
-      render jsonapi: result.value, include: [:geolocation]
+      render_serialized_payload { serialize_resource(result.value) }
     else
-      render_error(result.error, status: result.error)
+      render_error_payload(result.error, result.error)
     end
   end
 
   def show
-    if stale?(etag: [resource, params[:include]&.to_s, params[:fields]&.to_s], last_modified: resource.updated_at.utc, public: true)
-      render jsonapi: resource, include: [:geolocation], cache: Rails.cache
+    if stale?(etag: resource, last_modified: resource.updated_at.utc, public: true)
+      render_serialized_payload { serialize_resource(resource) }
     end
   end
 
@@ -28,15 +28,34 @@ class ApplicationController < ActionController::API
     raise NotImplementedError
   end
 
+  def resource_serializer
+    raise NotImplementedError
+  end
+
   def create_service
     raise NotImplementedError
   end
 
-  def render_not_found_error
-    render_error('Not found', status: 404)
+  def render_serialized_payload(status = 200)
+    render json: yield, status: status, content_type: content_type
   end
 
-  def render_error(message, status:)
-    render jsonapi_errors: { detail: message }, status: status
+  def render_error_payload(error, status = 422)
+    render json: { error: error }, status: status, content_type: content_type
+  end
+
+  def serialize_resource(resource)
+    resource_serializer.new(
+      resource,
+      include: [:geolocation]
+    ).serializable_hash
+  end
+
+  def record_not_found
+    render_error_payload('Resource not found', 404)
+  end
+
+  def content_type
+    'application/vnd.api+json'
   end
 end
